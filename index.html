@@ -15,7 +15,7 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--night); font: 16px/1.55 Onest, Arial, sans-serif; }
 .wrap { width: min(1080px, calc(100% - 36px)); margin-inline: auto; }
-header, footer { background: var(--night); color: var(--cream); }
+header { background: var(--night); color: var(--cream); }
 header .wrap { position: relative; padding: 58px 0 64px; }
 .orbit { position: absolute; right: 0; top: 38px; width: 33%; opacity: .65; }
 .label { font-size: 11.5px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
@@ -23,7 +23,7 @@ header .wrap { position: relative; padding: 58px 0 64px; }
 h1, h2 { font-family: 'Noto Serif Display', Georgia, serif; font-weight: 400; line-height: 1.08; margin: 0; }
 h1 { position: relative; font-size: clamp(39px, 7vw, 80px); margin: 18px 0; }
 h1 em { color: var(--apricot); }
-header p, footer p { position: relative; color: #c9c3b8; max-width: 540px; margin: 0; }
+header p { position: relative; color: #c9c3b8; max-width: 540px; margin: 0; }
 main { display: grid; gap: 24px; padding-block: 32px 48px; }
 .stage { border: 1px solid var(--line); border-radius: 28px; background: var(--card); padding: clamp(18px, 3.5vw, 38px); }
 .stage h2 { font-size: clamp(27px, 4.5vw, 46px); margin: 13px 0 22px; }
@@ -55,8 +55,6 @@ main { display: grid; gap: 24px; padding-block: 32px 48px; }
 .backup { margin: 10px 0 0; padding: 8px 10px; border: 1px dashed #9b84c5; border-radius: 10px; color: var(--cream); font-size: 12px; text-align: center; }
 .backup b { color: var(--lavender); }
 .note { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
-footer .wrap { padding-block: 28px 34px; }
-footer h2 { font-size: clamp(26px, 4vw, 40px); margin: 9px 0; }
 @media (max-width: 740px) {
   .route, .route.release { grid-template-columns: minmax(0, 1fr); gap: 7px; }
   .route .arrow { transform: rotate(90deg); }
@@ -153,10 +151,5 @@ footer h2 { font-size: clamp(26px, 4vw, 40px); margin: 9px 0; }
   </section>
 </main>
 
-<footer><div class="wrap">
-  <div class="label brand">✦ &nbsp; Первый шаг</div>
-  <h2>Один исходник и один референс</h2>
-  <p>Пришлите своё видео и пример монтажа, который вам нравится. По ним соберём первый ролик и внесём одну правку через Telegram.</p>
-</div></footer>
 </body>
 </html>
