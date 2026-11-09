@@ -1,26 +1,162 @@
 <!doctype html>
-<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NV · Контент-система для Алексея</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;1,400&family=Onest:wght@400;500;600;700&display=swap');
-*{box-sizing:border-box}body{margin:0;background:#f4efe6;color:#121a2b;font:16px/1.6 Onest,Arial,sans-serif}header,footer{background:#121a2b;color:#ede7dc}.wrap{width:min(1080px,calc(100% - 40px));margin:auto}header .wrap{padding:64px 0 70px;position:relative}header svg{position:absolute;right:0;top:52px;width:33%;opacity:.55;pointer-events:none}.label{font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}.gold{color:#e9c46a}h1,h2,h3{font-family:'Noto Serif Display',Georgia,serif;font-weight:400;line-height:1.12;margin:0}h1{font-size:clamp(40px,7vw,82px);position:relative;margin:22px 0}em{color:#e0a47a}header p{color:#c9c3b8;max-width:510px;position:relative}main{padding:44px 0 60px}h2{font-size:clamp(28px,5vw,42px);margin-bottom:18px}h3{font-size:27px;margin:14px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.panel{border:1px solid #ded6c9;background:#fbf8f2;border-radius:18px;padding:23px}.panel{margin-top:20px}.tag{display:inline-block;border-radius:30px;padding:4px 11px;background:#e0a47a;color:#121a2b}.card:nth-child(2) .tag{background:#8fcba8}.card:nth-child(3) .tag{background:#afa2f0}.muted{color:#5e6475}p{margin:12px 0}ul{padding-left:18px}li+li{margin-top:8px}a{color:#754325;text-underline-offset:3px}footer .wrap{padding:38px 0}footer h2{margin-top:10px}footer p{max-width:720px}@media(max-width:760px){.grid{grid-template-columns:1fr}header svg{opacity:.25}}@media print{body{font-size:12px}header .wrap,footer .wrap{padding:24px 0}.card,.panel{break-inside:avoid}*{print-color-adjust:exact}}
+
+:root {
+  --night: #121a2b; --paper: #f4efe6; --card: #fbf8f2; --cream: #ede7dc;
+  --muted: #5e6475; --line: #ded6c9; --apricot: #e0a47a; --sage: #8fcba8;
+  --lavender: #afa2f0; --gold: #e9c46a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--night); font: 16px/1.55 Onest, Arial, sans-serif; }
+.wrap { width: min(1080px, calc(100% - 36px)); margin-inline: auto; }
+header, footer { background: var(--night); color: var(--cream); }
+header .wrap { position: relative; padding: 58px 0 64px; }
+.orbit { position: absolute; right: 0; top: 38px; width: 33%; opacity: .65; }
+.label { font-size: 11.5px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+.brand { color: var(--gold); }
+h1, h2 { font-family: 'Noto Serif Display', Georgia, serif; font-weight: 400; line-height: 1.08; margin: 0; }
+h1 { position: relative; font-size: clamp(39px, 7vw, 80px); margin: 18px 0; }
+h1 em { color: var(--apricot); }
+header p, footer p { position: relative; color: #c9c3b8; max-width: 540px; margin: 0; }
+main { display: grid; gap: 24px; padding-block: 32px 48px; }
+.stage { border: 1px solid var(--line); border-radius: 28px; background: var(--card); padding: clamp(18px, 3.5vw, 38px); }
+.stage h2 { font-size: clamp(27px, 4.5vw, 46px); margin: 13px 0 22px; }
+.chip { display: inline-block; border-radius: 30px; padding: 4px 11px; background: var(--apricot); }
+.stage:nth-child(2) .chip { background: var(--sage); }
+.stage:nth-child(3) .chip { background: var(--lavender); }
+.route { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 2.05fr) auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.route.release { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; }
+.node { min-width: 0; padding: 15px; background: #f4efe6; border: 1px solid var(--line); border-radius: 18px; }
+.node .label { color: var(--muted); }
+.node strong, .person strong { display: block; margin: 4px 0 2px; line-height: 1.25; }
+.node small, .person small { display: block; font-size: 13px; line-height: 1.4; }
+.node small { color: var(--muted); }
+.icon { display: block; width: 27px; height: 27px; margin-bottom: 8px; color: #795036; }
+.arrow { color: #795036; text-align: center; font: 25px/1 Onest, Arial, sans-serif; align-self: center; }
+.home { min-width: 0; color: var(--cream); }
+.roof { display: block; width: 100%; height: 26px; color: var(--night); }
+.rooms { padding: 14px; border-radius: 0 0 18px 18px; background: var(--night); }
+.home .label { color: var(--gold); text-align: center; margin-bottom: 11px; }
+.crew { display: grid; grid-template-columns: minmax(0, 1fr) 57px minmax(0, 1fr); gap: 5px; align-items: stretch; }
+.person { min-width: 0; padding: 12px; border-radius: 13px; background: #1b2540; }
+.person .model { color: var(--sage); font-weight: 600; }
+.person.editor .model { color: var(--lavender); }
+.person small { color: #c9c3b8; }
+.avatar { display: block; width: 34px; height: 34px; color: var(--sage); }
+.editor .avatar { color: var(--lavender); }
+.transfer { align-self: center; text-align: center; color: var(--apricot); font-size: 10px; line-height: 1.2; }
+.transfer span { display: block; font-size: 24px; line-height: 1; }
+.backup { margin: 10px 0 0; padding: 8px 10px; border: 1px dashed #9b84c5; border-radius: 10px; color: var(--cream); font-size: 12px; text-align: center; }
+.backup b { color: var(--lavender); }
+.note { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
+footer .wrap { padding-block: 28px 34px; }
+footer h2 { font-size: clamp(26px, 4vw, 40px); margin: 9px 0; }
+@media (max-width: 740px) {
+  .route, .route.release { grid-template-columns: minmax(0, 1fr); gap: 7px; }
+  .route .arrow { transform: rotate(90deg); }
+  .node { display: grid; grid-template-columns: 30px 1fr; column-gap: 12px; align-items: center; }
+  .node .icon { grid-row: 1 / 4; margin: 0; }
+  .node .label, .node strong, .node small { grid-column: 2; }
+  .orbit { opacity: .27; }
+}
+@media (max-width: 360px) {
+  .crew { grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr); }
+  .person { padding: 8px; }
+  .transfer { font-size: 9px; }
+}
+@media print {
+  * { print-color-adjust: exact; }
+  .stage { break-inside: avoid; }
+}
 </style>
-<header><div class="wrap"><div class="label gold">✦ &nbsp; NV / Персональная нейросистема</div>
-<svg viewBox="0 0 300 220" aria-hidden="true"><ellipse cx="150" cy="112" rx="140" ry="44" transform="rotate(-24 150 112)" fill="none" stroke="#afa2f0"/><circle cx="150" cy="112" r="69" fill="none" stroke="#e0a47a"/><path d="M235 27q2 17 18 19-16 2-18 19-2-17-18-19 16-2 18-19" fill="#e9c46a"/></svg>
-<h1>Ваша система<br>для <em>выпуска контента</em></h1><p>Алексей, начнём с монтажа в Telegram. Затем добавим сценариста и научим команду подхватывать задачи друг друга. Когда выпуск роликов будет отлажен, подключим публикацию и статистику.</p></div></header>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="phone" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="3" width="18" height="26" rx="4"/><path d="m13 11 7 5-7 5zM13 25h6"/></g></symbol>
+  <symbol id="video" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="6" width="26" height="20" rx="4"/><path d="m13 11 8 5-8 5z"/></g></symbol>
+  <symbol id="check" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="12"/><path d="m10 16 4 4 8-8"/></g></symbol>
+  <symbol id="calendar" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="4" y="7" width="24" height="21" rx="4"/><path d="M10 4v6m12-6v6M4 14h24m-17 6h3m4 0h3"/></g></symbol>
+  <symbol id="stats" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 5v22h22M11 22v-5m6 5V13m6 9V8"/></g></symbol>
+  <symbol id="masha" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="currentColor"/><path d="M13 18a7 7 0 0 1 14 0v8H13Z" fill="#121a2b"/><path d="M16 17q5-1 8-4v6a4 4 0 0 1-8 0zM12 32a8 6 0 0 1 16 0" fill="#fbf8f2"/></symbol>
+  <symbol id="pasha" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="currentColor"/><path d="M13 18a7 7 0 0 1 14 0v4H13Z" fill="#121a2b"/><path d="M16 17q6 1 8-3v6a4 4 0 0 1-8 0zM12 32a8 6 0 0 1 16 0" fill="#fbf8f2"/><path d="M13 20v-2a7 7 0 0 1 14 0v2m-14-1v4m14-4v4" fill="none" stroke="#121a2b" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header><div class="wrap">
+  <div class="label brand">✦ &nbsp; NV / Персональная нейросистема</div>
+  <svg class="orbit" viewBox="0 0 300 220" aria-hidden="true"><ellipse cx="150" cy="112" rx="140" ry="44" transform="rotate(-24 150 112)" fill="none" stroke="#afa2f0"/><circle cx="150" cy="112" r="69" fill="none" stroke="#e0a47a"/><path d="M235 27q2 17 18 19-16 2-18 19-2-17-18-19 16-2 18-19" fill="#e9c46a"/></svg>
+  <h1>От первого ролика<br><em>до своей команды</em></h1>
+  <p>Алексей, начнём с монтажа в Telegram. Затем добавим сценариста, а когда выпуск будет отлажен, подключим публикацию и статистику.</p>
+</div></header>
+
 <main class="wrap">
-<h2>Три этапа развития</h2>
-<div class="grid">
-<section class="card"><span class="tag label">01 / Монтаж в Telegram</span><h3>Отправили видео. Получили ролик</h3><p>Вы отправляете исходник с телефона в бот Hermes. Claude работает монтажёром: по вашим примерам выбирает начало, убирает лишнее и задаёт оформление. Инструменты на сервере расшифровывают речь и собирают видео с субтитрами.</p><p><strong>На выходе</strong> — готовый MP4 в том же чате. Если нужна правка, напишите «Сократи вступление». Домашний компьютер может быть выключен.</p><p class="muted">Начинаем с одного вертикального ролика на 30–40 секунд по вашему референсу.</p></section>
-<section class="card"><span class="tag label">02 / Команда в одном боте</span><h3>Маша и Паша работают вместе</h3><p><strong>Маша на GPT</strong> придумывает хук и пишет сценарий. <strong>Паша на Claude</strong> монтирует. Вы можете обратиться к любому из них или написать «Сделай ролик целиком». Бот сам передаёт сценарий, исходник и правки.</p><p><strong>Если у модели закончился лимит.</strong> Настраиваем резерв в обе стороны. Например, GPT может продолжить работу Паши по тем же правилам, с тем же исходником и сохранёнными результатами. Для вас Паша остаётся монтажёром.</p><p class="muted">Подмену проверяем на ваших подключениях и на задаче в середине монтажа.</p></section>
-<section class="card"><span class="tag label">03 / Полный цикл выпуска</span><h3>От записи до статистики</h3><p>Из одной записи система готовит несколько версий ролика. Вы утверждаете те, которые готовы к выпуску. Бот ставит их в календарь и через Metricool отправляет в Instagram по расписанию.</p><p><strong>На выходе</strong> — статусы публикаций и доступные метрики в Telegram. Можно сравнить охват и просмотры версий и выбрать, какие форматы повторить.</p><p class="muted">Сначала проверяем публикацию одного согласованного Reel и получение его метрик. Пробный режим и регулярный выпуск проверяем отдельно.</p></section>
-</div>
-<section class="panel"><h2>Что проверили до старта</h2>
-<ul>
-<li><strong>Агенты и подписки.</strong> Hermes поддерживает распределение задач между моделями и резервное переключение при распознанных ошибках. Правила ролей, файлы и состояние работы сохраняем в общей карточке. Автоматическую подмену при исчерпании лимита Claude через DirectSDK проверяем отдельно. Для GPT есть вход через ChatGPT/Codex. Claude Pro и Max можно подключить через экспериментальный плагин DirectSDK. Он использует вход в Claude Code на сервере и работает без отдельного API-ключа. Для пилота проверим авторизацию, расход лимита и сборку одного ролика на вашей подписке. Отдельный API остаётся запасным вариантом. <a href="https://hermes-agent.nousresearch.com/marketplace/claude-subscription-directsdk">Claude DirectSDK</a> · <a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/fallback-providers">Резервные модели</a> · <a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation/">Делегирование</a> · <a href="https://hermes-agent.nousresearch.com/docs/integrations/providers">Подключение моделей</a></li>
-<li><strong>Видео и сервер.</strong> Локально проверили нарезку и экспорт тестового MP4. Для реального ролика проверим точность титров и склеек. Стандартный Telegram Bot API позволяет боту скачать до 20 МБ. Для тяжёлых исходников предусмотрим загрузку по защищённой ссылке или отдельный сервер Telegram Bot API. <a href="https://ffmpeg.org/ffmpeg-filters.html">FFmpeg</a> · <a href="https://core.telegram.org/bots/api#using-a-local-bot-api-server">Telegram Bot API</a></li>
-<li><strong>Публикация и цифры.</strong> Metricool поддерживает планирование обычных и пробных Reels, а также статистику Reels. Автоматизацию из бота проверим на доступном тарифе и нужном методе интеграции. Для пробных роликов доступ решает Instagram при публикации, а точный лимит не раскрывается. Частота 3–5 в день остаётся гипотезой. Для YouTube загрузку и режим видимости проверим на канале отдельным тестом. <a href="https://help.metricool.com/how-to-publish-instagram-trial-reels-in-metricool-q27tj">Пробные Reels</a> · <a href="https://help.metricool.com/basic-guide-for-api-integration-r97af">Metricool API</a> · <a href="https://help.metricool.com/instagram-metrics-ght51">Метрики</a> · <a href="https://developers.google.com/youtube/data/reference/rest/v3/videos/insert">YouTube API</a></li>
-</ul></section>
+  <section class="stage">
+    <span class="chip label">01 / Монтаж в Telegram</span>
+    <h2>Отправили видео. Получили ролик</h2>
+    <div class="route">
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#phone"/></svg><span class="label">Вы · Telegram</span><strong>Отправляете видео</strong><small>«Собери короткий ролик»</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="home">
+        <svg class="roof" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 150 1 300 26Z" fill="currentColor"/></svg>
+        <div class="rooms"><div class="label">✦ &nbsp; Бот Hermes</div>
+          <div class="person editor"><svg class="avatar" aria-hidden="true"><use href="#pasha"/></svg><strong>Монтажёр <span class="model">· Claude</span></strong><small>Выбирает начало, убирает лишнее и запускает сборку с субтитрами.</small></div>
+        </div>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#video"/></svg><span class="label">В том же чате</span><strong>Готовый MP4</strong><small>Правку можно дать сообщением</small></div>
+    </div>
+    <p class="note">Первый тест — один ролик на 30–40 секунд по вашему примеру. Сборка идёт на сервере, поэтому компьютер можно выключить.</p>
+  </section>
+
+  <section class="stage">
+    <span class="chip label">02 / Команда в одном боте</span>
+    <h2>Маша пишет. Паша монтирует</h2>
+    <div class="route">
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#phone"/></svg><span class="label">Вы · Telegram</span><strong>Пишете в тот же бот</strong><small>«Маша, предложи начало. Паша, собери ролик»</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="home">
+        <svg class="roof" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 150 1 300 26Z" fill="currentColor"/></svg>
+        <div class="rooms">
+          <div class="label">✦ &nbsp; Бот Hermes</div>
+          <div class="crew">
+            <div class="person"><svg class="avatar" aria-hidden="true"><use href="#masha"/></svg><strong>Маша <span class="model">· GPT</span></strong><small>Придумывает начало и пишет сценарий</small></div>
+            <div class="transfer">Сценарий<span aria-hidden="true">→</span></div>
+            <div class="person editor"><svg class="avatar" aria-hidden="true"><use href="#pasha"/></svg><strong>Паша <span class="model">· Claude</span></strong><small>Берёт сценарий и исходник, собирает ролик</small></div>
+          </div>
+          <p class="backup"><b>GPT ↔ Claude</b><br>Настраиваем подхват при лимите. У обеих моделей одни правила и материалы.</p>
+        </div>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#video"/></svg><span class="label">В том же чате</span><strong>Ролик от команды</strong><small>Можно уточнить сценарий у Маши или монтаж у Паши</small></div>
+    </div>
+    <p class="note">Можно обратиться к каждому по имени или написать «Сделай ролик целиком». Подмену моделей при лимите проверим на ваших подключениях.</p>
+  </section>
+
+  <section class="stage">
+    <span class="chip label">03 / Полный цикл выпуска</span>
+    <h2>От готового видео до статистики</h2>
+    <div class="route release">
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#video"/></svg><span class="label">Hermes</span><strong>Версии ролика</strong><small>Из одной записи</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#check"/></svg><span class="label">Вы · Telegram</span><strong>Выбираете ролик</strong><small>Утверждаете к выпуску</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#calendar"/></svg><span class="label">Metricool</span><strong>Reels в Instagram</strong><small>Публикация по расписанию</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node"><svg class="icon" aria-hidden="true"><use href="#stats"/></svg><span class="label">Бот · Telegram</span><strong>Статус и метрики</strong><small>Доступные просмотры и охват</small></div>
+    </div>
+    <p class="note">Начнём с одной согласованной публикации и проверим, какие метрики возвращаются в бот.</p>
+  </section>
 </main>
-<footer><div class="wrap"><div class="label gold">✦ &nbsp; Первый шаг</div><h2>Один ролик от исходника до выдачи</h2><p>Пришлите один исходник и пример монтажа, который вам нравится. Проверим, что Claude доводит видео до готового файла в Telegram, и внесём одну правку. После этого добавим Машу и проверим, как специалисты передают и подхватывают задачи.</p></div></footer>
+
+<footer><div class="wrap">
+  <div class="label brand">✦ &nbsp; Первый шаг</div>
+  <h2>Один исходник и один референс</h2>
+  <p>Пришлите своё видео и пример монтажа, который вам нравится. По ним соберём первый ролик и внесём одну правку через Telegram.</p>
+</div></footer>
+</body>
 </html>
